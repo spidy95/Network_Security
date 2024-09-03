@@ -12,5 +12,7 @@ xgboost
 matplotlib
 seaborn
 fastapi
+uvicorn
+apache-airflow
 
 -e .

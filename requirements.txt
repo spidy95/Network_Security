@@ -11,5 +11,6 @@ pyyaml
 xgboost
 matplotlib
 seaborn
+fastapi
 
 -e .

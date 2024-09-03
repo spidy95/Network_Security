@@ -32,6 +32,8 @@ class ModelEvaluation:
             test_df = pd.read_csv(valid_test_file_path)
 
             df = pd.concat([train_df,test_df])
+            
+            print(df)
 
             y_true = df[TARGET_COLUMN]
 
@@ -55,6 +57,9 @@ class ModelEvaluation:
                     train_model_metric_artifact=self.model_trainer_artifact.test_metric_artifact, 
                     best_model_metric_artifact=None)
                 logging.info(f"Model evaluation artifact: {model_evaluation_artifact}")
+                model_eval_report = model_evaluation_artifact.__dict__
+
+                write_yaml_file(self.model_eval_config.report_file_path, model_eval_report)
                 return model_evaluation_artifact
 
             latest_model_path = model_resolver.get_best_model_path()
@@ -73,6 +78,8 @@ class ModelEvaluation:
                 is_model_accepted=True
             else:
                 is_model_accepted=False
+                
+            print(is_model_accepted, improved_accuracy, latest_model_path, train_model_file_path, trained_metric, latest_metric)
 
 
             model_evaluation_artifact = ModelEvaluationArtifact(
@@ -84,6 +91,8 @@ class ModelEvaluation:
                     best_model_metric_artifact=latest_metric)
 
             model_eval_report = model_evaluation_artifact.__dict__
+            
+            print(model_eval_report)
 
             #save the report
             write_yaml_file(self.model_eval_config.report_file_path, model_eval_report)
